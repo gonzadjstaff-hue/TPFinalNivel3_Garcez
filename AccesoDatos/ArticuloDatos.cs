@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Dominio;
 
 namespace AccesoDatos
@@ -20,17 +21,20 @@ namespace AccesoDatos
                     "INNER JOIN MARCAS M ON A.IdMarca = M.Id " +
                     "INNER JOIN CATEGORIAS C ON A.IdCategoria = C.Id");
 
-                datos.abrirConexion();
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
                     Articulo aux = new Articulo();
+
                     aux.Id = (int)datos.Lector["Id"];
                     aux.Codigo = (string)datos.Lector["Codigo"];
                     aux.Nombre = (string)datos.Lector["Nombre"];
                     aux.Descripcion = (string)datos.Lector["Descripcion"];
-                    aux.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+
+                    if (!(datos.Lector["ImagenUrl"] is DBNull))
+                        aux.ImagenUrl = (string)datos.Lector["ImagenUrl"];
+
                     aux.Precio = (decimal)datos.Lector["Precio"];
 
                     aux.Marca = new Marca();
@@ -46,9 +50,20 @@ namespace AccesoDatos
 
                 return lista;
             }
-            catch
+            finally
             {
-                throw;
+                datos.cerrarConexion();
+            }
+        }
+
+        public void Eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("DELETE FROM ARTICULOS WHERE Id = @id");
+                datos.setearParametro("@id", id);
+                datos.ejecutarAccion();
             }
             finally
             {
