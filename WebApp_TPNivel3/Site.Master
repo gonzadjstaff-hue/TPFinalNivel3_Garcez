@@ -20,8 +20,6 @@
     <form runat="server">
         <asp:ScriptManager runat="server">
             <Scripts>
-                <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
-                <%--Framework Scripts--%>
                 <asp:ScriptReference Name="MsAjaxBundle" />
                 <asp:ScriptReference Name="jquery" />
                 <asp:ScriptReference Name="bootstrap" />
@@ -34,7 +32,6 @@
                 <asp:ScriptReference Name="WebParts.js" Assembly="System.Web" Path="~/Scripts/WebForms/WebParts.js" />
                 <asp:ScriptReference Name="Focus.js" Assembly="System.Web" Path="~/Scripts/WebForms/Focus.js" />
                 <asp:ScriptReference Name="WebFormsBundle" />
-                <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
 
@@ -48,15 +45,31 @@
                     </button>
                     <a class="navbar-brand" runat="server" href="~/">Application name</a>
                 </div>
+
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <asp:Panel ID="pnlNoLogin" runat="server" Visible="true">
+                                <a runat="server" href="~/Login.aspx">Login</a>
+                            </asp:Panel>
+
+                            <asp:Panel ID="pnlLogin" runat="server" Visible="false">
+                               <asp:Label ID="lblBienvenido" runat="server" ForeColor="White" />
+                                <a runat="server" href="~/Logout.aspx" style="margin-left:12px;">Cerrar sesión</a>
+                            </asp:Panel>
+                        </li>
+                    </ul>
                 </div>
+
             </div>
         </div>
+
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>

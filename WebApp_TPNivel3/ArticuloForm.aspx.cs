@@ -11,6 +11,13 @@ namespace WebApp_TPNivel3
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["usuario"] == null || !((Usuario)Session["usuario"]).Admin)
+            {
+                Response.Redirect("Login.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+
             if (!IsPostBack)
             {
                 CargarCombos();
@@ -25,7 +32,6 @@ namespace WebApp_TPNivel3
 
         private void CargarCombos()
         {
-            // Usamos tus Negocio actuales de Marca/Categoria (ya existen en tu solución)
             MarcaNegocio marcaNegocio = new MarcaNegocio();
             ddlMarca.DataSource = marcaNegocio.Listar();
             ddlMarca.DataTextField = "Descripcion";
@@ -65,7 +71,6 @@ namespace WebApp_TPNivel3
         {
             try
             {
-                // Validaciones mínimas (obligatorio)
                 if (string.IsNullOrWhiteSpace(txtCodigo.Text) ||
                     string.IsNullOrWhiteSpace(txtNombre.Text) ||
                     string.IsNullOrWhiteSpace(txtDescripcion.Text) ||
@@ -104,7 +109,8 @@ namespace WebApp_TPNivel3
                     negocio.Agregar(a);
                 }
 
-                Response.Redirect("AdminArticulos.aspx");
+                Response.Redirect("AdminArticulos.aspx", false);
+                Context.ApplicationInstance.CompleteRequest();
             }
             catch (Exception ex)
             {

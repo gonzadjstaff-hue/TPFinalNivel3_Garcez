@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Dominio;
+using System;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace WebApp_TPNivel3
 {
@@ -11,7 +8,19 @@ namespace WebApp_TPNivel3
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Usuario u = Session["usuario"] as Usuario;
 
+            if (u == null)
+            {
+                pnlNoLogin.Visible = true;
+                pnlLogin.Visible = false;
+            }
+            else
+            {
+                pnlNoLogin.Visible = false;
+                pnlLogin.Visible = true;
+                lblBienvenido.Text = "Bienvenido " + u.Email;
+            }
         }
     }
 }
