@@ -10,8 +10,10 @@
 
     <br /><br />
 
-    <asp:GridView ID="gvAdmin" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-bordered"
-        DataKeyNames="Id" OnRowCommand="gvAdmin_RowCommand">
+    <asp:GridView ID="gvAdmin" runat="server" AutoGenerateColumns="False"
+        CssClass="table table-striped table-bordered"
+        DataKeyNames="Id"
+        OnRowCommand="gvAdmin_RowCommand">
         <Columns>
             <asp:BoundField DataField="Codigo" HeaderText="Código" />
             <asp:BoundField DataField="Nombre" HeaderText="Nombre" />

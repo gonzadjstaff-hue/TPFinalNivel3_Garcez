@@ -18,7 +18,7 @@ namespace AccesoDatos
         public AccesoDatos()
         {
             conexion = new SqlConnection(
-                "Data Source=.\\SQLEXPRESS;Initial Catalog=CATALOGO_DB;Integrated Security=True");
+                "Data Source=.\\SQLEXPRESS;Initial Catalog=CATALOGO_WEB_DB;Integrated Security=True");
             comando = new SqlCommand();
         }
 

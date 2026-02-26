@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using Dominio;
 using Negocio;
-
+using System.Web.UI.WebControls;
 
 namespace WebApp_TPNivel3
 {
@@ -13,6 +9,12 @@ namespace WebApp_TPNivel3
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["usuario"] == null || !((Usuario)Session["usuario"]).Admin)
+            {
+                Response.Redirect("Login.aspx");
+                return;
+            }
+
             if (!IsPostBack)
                 CargarGrilla();
         }
@@ -29,13 +31,12 @@ namespace WebApp_TPNivel3
             int id = int.Parse(e.CommandArgument.ToString());
 
             if (e.CommandName == "Editar")
-            {
                 Response.Redirect("ArticuloForm.aspx?id=" + id);
-            }
-            else if (e.CommandName == "Eliminar")
+
+            if (e.CommandName == "Eliminar")
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
-                negocio.Eliminar(id); 
+                negocio.Eliminar(id);
                 CargarGrilla();
             }
         }
