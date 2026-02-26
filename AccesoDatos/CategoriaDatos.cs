@@ -13,7 +13,6 @@ namespace AccesoDatos
             try
             {
                 datos.setearConsulta("SELECT Id, Descripcion FROM CATEGORIAS");
-                datos.abrirConexion();
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())

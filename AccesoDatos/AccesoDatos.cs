@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace AccesoDatos
@@ -23,19 +24,37 @@ namespace AccesoDatos
 
         public void setearConsulta(string consulta)
         {
-            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandType = CommandType.Text;
             comando.CommandText = consulta;
         }
 
-        public void abrirConexion()
+        public void setearParametro(string nombre, object valor)
+        {
+            comando.Parameters.AddWithValue(nombre, valor ?? DBNull.Value);
+        }
+
+        public void limpiarParametros()
+        {
+            comando.Parameters.Clear();
+        }
+
+        private void prepararConexion()
         {
             comando.Connection = conexion;
-            conexion.Open();
+            if (conexion.State != ConnectionState.Open)
+                conexion.Open();
         }
 
         public void ejecutarLectura()
         {
+            prepararConexion();
             lector = comando.ExecuteReader();
+        }
+
+        public void ejecutarAccion()
+        {
+            prepararConexion();
+            comando.ExecuteNonQuery();
         }
 
         public void cerrarConexion()
@@ -43,7 +62,8 @@ namespace AccesoDatos
             if (lector != null)
                 lector.Close();
 
-            conexion.Close();
+            if (conexion != null && conexion.State == ConnectionState.Open)
+                conexion.Close();
         }
     }
 }

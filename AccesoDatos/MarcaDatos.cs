@@ -14,7 +14,6 @@ namespace AccesoDatos
             try
             {
                 datos.setearConsulta("SELECT Id, Descripcion FROM MARCAS");
-                datos.abrirConexion();
                 datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
