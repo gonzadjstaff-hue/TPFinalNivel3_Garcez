@@ -14,12 +14,14 @@ namespace WebApp_TPNivel3
             {
                 pnlNoLogin.Visible = true;
                 pnlLogin.Visible = false;
+                phAdmin.Visible = false;
             }
             else
             {
                 pnlNoLogin.Visible = false;
                 pnlLogin.Visible = true;
                 lblBienvenido.Text = "Bienvenido " + u.Email;
+                phAdmin.Visible = u.Admin;
             }
         }
     }

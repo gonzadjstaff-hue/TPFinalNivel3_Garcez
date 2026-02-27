@@ -11,7 +11,7 @@ namespace WebApp_TPNivel3
             if (!IsPostBack)
             {
                 CargarFiltros();
-                CargarGrilla();
+                CargarCards();
             }
         }
 
@@ -32,11 +32,13 @@ namespace WebApp_TPNivel3
             ddlCategoriaFiltro.Items.Insert(0, new System.Web.UI.WebControls.ListItem("Todas", "0"));
         }
 
-        private void CargarGrilla()
+        private void CargarCards()
         {
             ArticuloNegocio negocio = new ArticuloNegocio();
-            gvArticulos.DataSource = negocio.Listar();
-            gvArticulos.DataBind();
+            var lista = negocio.Listar();
+            rptArticulos.DataSource = lista;
+            rptArticulos.DataBind();
+            lblInfo.Text = lista.Count + " productos";
         }
 
         protected void btnFiltrar_Click(object sender, EventArgs e)
@@ -57,8 +59,9 @@ namespace WebApp_TPNivel3
             if (idCategoria != 0)
                 lista = lista.Where(x => x.Categoria != null && x.Categoria.Id == idCategoria).ToList();
 
-            gvArticulos.DataSource = lista;
-            gvArticulos.DataBind();
+            rptArticulos.DataSource = lista;
+            rptArticulos.DataBind();
+            lblInfo.Text = lista.Count + " productos";
         }
 
         protected void btnLimpiar_Click(object sender, EventArgs e)
@@ -66,7 +69,7 @@ namespace WebApp_TPNivel3
             txtBuscar.Text = "";
             ddlMarcaFiltro.SelectedValue = "0";
             ddlCategoriaFiltro.SelectedValue = "0";
-            CargarGrilla();
+            CargarCards();
         }
     }
 }
